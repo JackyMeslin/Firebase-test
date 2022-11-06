@@ -1,117 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Title</title>
+  <meta name="author" content="Gaute Meek Olsen">
 </head>
+
 <body>
-    <!DOCTYPE html>
-<html lang="en">
- 
-<head>
-    <meta charset="UTF-8">
-    <title>Collecting Data</title>
-    <script src=
-"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
- 
-    <link rel="stylesheet" href=
-"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity=
-"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-        crossorigin="anonymous">
-</head>
- 
-<body class="container" style="margin-top: 50px;
-    width: 50%; height:auto;">
-     
-    <h2 class="text-primary" style=
-        "margin-left: 15px; margin-bottom: 10px">
-        Hey There,Help Us In Collecting Data
-    </h2>
-     
-    <form class="container" id="contactForm">
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">
-                        Enter Your Name
-                    </label>
-                     
-                    <input type="text" class="form-control"
-                    id="name" placeholder="Enter your name">
-                </div>
- 
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">
-                        Email address
-                    </label>
-                     
-                    <input type="email" class="form-control"
-                    id="email" placeholder="name@example.com">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary"
-                style="margin-left: 15px; margin-top: 10px">
-                Submit
-            </button>
-        </div>
-    </form>
-
-    <script src=
-    "https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
-        </script>
-
-<script>
-    var firebaseConfig = {
-        
-        
-        apiKey: "AIzaSyCAY9KHDPa40n3p_RRLfMgwbnFPc4i0RRs",
-        authDomain: "fir-test-ff735.firebaseapp.com",
-        databaseURL: "https://fir-test-ff735-default-rtdb.europe-west1.firebasedatabase.app/",
-        projectId: "fir-test-ff735",
-        storageBucket: "fir-test-ff735.appspot.com",
-        messagingSenderId: "296694858648",
-        appId: "1:296694858648:web:bdb285375b91f6d7eea1ed",
-        // measurementId: "G-YB708K4JB5"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    var messagesRef = firebase.database()
-        .ref('Collected Data');
-     
-    document.getElementById('contactForm')
-        .addEventListener('submit', submitForm);
-
-    function submitForm(e) {
-        e.preventDefault();
-
-        // Get values
-        var name = getInputVal('name');
-        var email = getInputVal('email');
-
-        saveMessage(name, email);
-        document.getElementById('contactForm').reset();
-    }
-
-    // Function to get form values
-    function getInputVal(id) {
-        return document.getElementById(id).value;
-    }
-
-    // Save message to firebase
-    function saveMessage(name, email) {
-        var newMessageRef = messagesRef.push();
-        newMessageRef.set({
-            name: name,
-            email: email,
-        });
-    }
-</script>
-
+    <label for="family-name">Surname:</label>
+    <input type="text" id="family-name">
+    <button id="family-button">Add</button>
+    <br>
+    <label for="city">City:</label>
+    <input type="text" id="city">
+    <label for="population">Population:</label>
+    <input type="text" id="population">
+    <button id="city-button">Add</button>
+    <br>
+    <label for="search-city">Population for city:</label>
+    <input type="text" id="search-city">
+    <button id="population-button">Add</button>
+    <span id="result-population"></span>
+    <br>
+    <label>3 big cities:</label><button id="get-big">Get cities</button>
+    <div id="big-result"></div>
+    <br>
+    <label>All cities</label>
+    <div id="all-cities"></div>
+    <br>
+    <button onclick="addDemoFamily()">Add demo family</button>
+  
     <!-- <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
@@ -124,6 +44,7 @@
         const firebaseConfig = {
           apiKey: "AIzaSyCAY9KHDPa40n3p_RRLfMgwbnFPc4i0RRs",
           authDomain: "fir-test-ff735.firebaseapp.com",
+          databaseURL: "https://fir-test-ff735-default-rtdb.europe-west1.firebasedatabase.app",
           projectId: "fir-test-ff735",
           storageBucket: "fir-test-ff735.appspot.com",
           messagingSenderId: "296694858648",
@@ -135,5 +56,181 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
       </script> -->
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCAY9KHDPa40n3p_RRLfMgwbnFPc4i0RRs",
+          authDomain: "fir-test-ff735.firebaseapp.com",
+          databaseURL: "https://fir-test-ff735-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "fir-test-ff735",
+          storageBucket: "fir-test-ff735.appspot.com",
+          messagingSenderId: "296694858648",
+          appId: "1:296694858648:web:bdb285375b91f6d7eea1ed",
+          measurementId: "G-YB708K4JB5"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <script>
+        const db = firebase.firestore();
+
+        const families = db.collection('families');
+        const cities = db.collection('cities');
+
+        document.querySelector('#family-button').addEventListener('click', () => {
+            const name = document.querySelector('#family-name').value;
+            addFamily(name);
+        });
+        document.querySelector('#city-button').addEventListener('click', () => {
+            const city = document.querySelector('#city').value;
+            const population = document.querySelector('#population').value;
+            addCity(city, population);
+        });
+
+        document.querySelector('#population-button').addEventListener('click', async () => {
+            const city = document.querySelector('#search-city').value;
+            const population = await populationCity(city);
+            document.querySelector('#result-population').textContent = population;
+        });
+        document.querySelector('#get-big').addEventListener('click', async () => {
+            const res = await getCities();
+            const bigDiv = document.querySelector('#big-result');
+            res.forEach(c => {
+                const p = document.createElement('p');
+                p.textContent = `${c.name}, ${c.pop}`;
+                bigDiv.appendChild(p);
+            });
+        });
+
+        const addFamily = surname => {
+            families.add({surname});
+        }
+
+        const addCity = (city, population) => {
+            const pop = parseInt(population);
+            cities.doc(city).set({pop})
+            .then(() => console.log('Document successfully written!'))
+            .catch(() => console.error('Error writing document: ', error));
+        }
+
+        const populationCity = async city => {
+            const doc = await cities.doc(city).get();
+            if (doc.exists) {
+                return doc.data().pop;
+            } else {
+                return 'city not found';
+            }
+        }
+
+        const getCities = async () => {
+            const querySnapshot = await cities.where('pop', '>=', 1000000).orderBy('pop', 'desc').limit(3).get();
+            let list = [];
+            querySnapshot.forEach(doc => list.push({name: doc.id, pop: doc.data().pop}));
+            return list;
+        }
+
+        cities.onSnapshot(snapshot => {
+            snapshot.docChanges().forEach(change => {
+                switch(change.type){
+                    case 'added':
+                        cityAdded({name: change.doc.id, pop: change.doc.data().pop});
+                        break;
+                    case 'modified':
+                        cityUpdated({name: change.doc.id, pop: change.doc.data().pop});
+                        break;
+                    case 'removed':
+                        cityRemoved(change.doc.id);
+                        break;
+                }
+            })
+        })
+
+        const citiesDiv = document.querySelector('#all-cities');
+        const cityAdded = city => {
+            const p = document.createElement('p');
+            p.textContent = `${city.name}, ${city.pop}`;
+            p.id = city.name;
+            const b = document.createElement('button');
+            b.textContent = '+100';
+            //b.onclick = () => updatePopulation(city.name, city.pop + 100);
+            b.onclick = () => populationTransaction(city.name, 100);
+            p.appendChild(b);
+            const d = document.createElement('button');
+            d.textContent = 'delete';
+            d.onclick = () => deleteCity(city.name);
+            p.appendChild(d);
+            citiesDiv.appendChild(p);
+        }
+
+        const cityUpdated = city => {
+            document.querySelector('#' + city.name).textContent = `${city.name}, ${city.pop}`;
+        }
+
+        const cityRemoved = name => {
+            document.querySelector('#' + name).remove();
+        }
+
+        const updatePopulation = (city, pop) => {
+            cities.doc(city).update({
+                pop: pop
+            })
+        }
+
+        const populationTransaction = (city, inc) => {
+            const cityRef = cities.doc(city);
+            db.runTransaction(transaction => {
+                return transaction.get(cityRef).then(sfdoc => {
+                    const newPop = sfdoc.data().pop + inc;
+                    transaction.update(cityRef, {pop: newPop});
+                })
+            })
+        }
+
+        const deleteCity = city => {
+            cities.doc(city).delete();
+        }
+
+        const addDemoFamily = async () => {
+            /*demo family object*/
+            const demoFamily = {
+                surname: 'Smith',
+                members: [
+                    {
+                        name: 'Joe',
+                        role: 'Child',
+                        favouriteFood: ['Pizza', 'Fish', 'Pancakes']
+                    },
+                    {
+                        name: 'Lucy',
+                        role: 'Mother',
+                        favouriteFood: ['Soup', 'Pizza']
+                    },
+                    {
+                        name: 'Amy',
+                        role: 'Child',
+                        favouriteFood: ['Icecream']
+                    }
+                ]
+            }
+            /*Adding a family document*/
+            docRef = await families.add({surname: demoFamily.surname});
+            /*Getting our sub-collection*/
+            const memberRef = docRef.collection('members');
+            
+            /*Adding documents to our sub-collection through a batch*/
+            const batch = db.batch();
+            for(let i=0; i<demoFamily.members.length; i++){
+                batch.set(memberRef.doc('' + i), demoFamily.members[i]);
+            }
+            await batch.commit();
+
+            /*Reading our saved data with a query*/
+            const querySnapshot = await memberRef.where('role', '==', 'Child').get();
+            let list = [];
+            querySnapshot.forEach(doc => list.push(doc.data().name));
+            alert('Only children: ' + list);
+        }
+    </script>
 </body>
 </html>
